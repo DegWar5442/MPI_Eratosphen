@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Input the end: ";
+    cin >> n;
+
+    double start_time = clock() / double(CLOCKS_PER_SEC); 
+
+    vector<char> marked(n + 1, 0);
+    int sqrt_n = static_cast<int>(sqrt(n));
+
+    for (int prime = 2; prime <= sqrt_n; ++prime) {
+        if (marked[prime]) continue;
+
+        for (int i = prime * prime; i <= n; i += prime) {
+            marked[i] = 1;
+        }
+    }
+
+    int count = 0;
+    for (int i = 2; i <= n; ++i) {
+        if (!marked[i]) count++;
+    }
+
+    double elapsed_time = clock() / double(CLOCKS_PER_SEC) - start_time;
+
+    cout << count << " primes are less than or equal to " << n << endl;
+    cout << "time " << elapsed_time << " sec.\n";
+
+    return 0;
+}
